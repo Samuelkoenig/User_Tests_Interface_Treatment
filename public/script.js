@@ -281,7 +281,7 @@ async function getMetadata() {
     treatmentGroup = Number(treatmentGroup);
 
     if (!((treatmentGroup === 0) || (treatmentGroup === 1))) {
-        treatmentGroup = Math.random() < 0.5 ? 0 : 1;
+        treatmentGroup = 1
     }
     
     sessionStorage.setItem('participantId', participantId);
