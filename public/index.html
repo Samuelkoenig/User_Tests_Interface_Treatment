@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Studie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+
+    <div id="survey-container">
+
+        <!-- Seite 1 -->
+        <div class="page" id="page1">
+
+            <!-- Chatbot-Interface-Container -->
+            <div id="chatbot-interface" class="chatbot-hidden">
+                <div class="chatbot-header">
+                    <div class="chatbot-name">Clara</div>
+                </div>
+
+                <div class="chatbot-content">
+                    <div class="chatbot-messages-container">
+                        <div class="messages" id="messages"></div>
+                    </div>
+
+                    <div id="input-container" class="input-container">
+                        <div class="textarea-wrapper">
+                            <textarea id="userInput" placeholder="Nachricht" rows="1"></textarea>
+                        </div>
+                        <button id="sendBtn" class="send-btn" title="Nachricht senden">
+                            <img src="img/send-icon.svg" alt="Send Icon" />
+                        </button>
+                    </div>
+
+                    <div id="finished-dialogue-container" class="hidden">
+                        <button id="finishedDialogueBtn" class="finished-dialogue-btn">Weiter zum Fragebogen</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="mobile-view.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

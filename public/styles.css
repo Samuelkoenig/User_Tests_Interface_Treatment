@@ -1,0 +1,643 @@
+/* Allgemeine Stile */
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+body.chatbot-visible {
+    overflow: hidden;
+    height: 100%;
+    overscroll-behavior: none;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+p, ul, li {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.hidden {
+    display: none;
+  }
+
+/* Container */
+#survey-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /*min-height: calc(100vh - 40px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;*/
+}
+
+#survey-container.chatbot-visible-locked {
+    overflow: hidden;
+}
+
+.page {
+    display: none;
+    padding: 40px;
+}
+
+.page.active {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.page.chatbot-visible {
+    padding: 0;
+}
+
+.page.chatbot-visible-locked {
+    overflow: hidden;
+}
+
+/* Fortschrittsleiste */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #e0e0e0;
+    height: 6px;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 100;
+}
+
+#progress {
+    width: 0%;
+    height: 100%;
+    background-color: #3498db;
+    transition: width 0.3s ease;
+}
+
+/* Fragen */
+.question {
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+}
+
+.question p {
+    font-weight: bold; 
+    margin-bottom: 15px; 
+}
+
+.divider-line {
+    height: 2px;
+    background-color: #d8dcdf;
+    display: none;
+}
+
+.divider-line-sd {
+    margin: 0px 0;
+    display: none;
+}
+
+.divider-line-likert {
+    margin-top: 23px;
+    margin-bottom: 0px;
+    display: block;
+}
+
+/* Checkbox und Radio Container */
+.radio-container, .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    white-space: normal; 
+}
+
+.question > .radio-container:not(:last-child),
+.question > .checkbox-container:not(:last-child) {
+    margin-bottom: 8px; 
+}
+
+/* Likert-Skalen */
+.likert {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.likert label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 220px;
+    line-height: 1.2;
+    word-break: break-word; 
+}
+
+.likert .radio-container {
+    align-items: center;
+    line-height: 1.2;
+}
+
+.likert-7 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+.likert-7 label {
+    flex: 0 0 calc(14.28% - 10px);
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    word-break: break-word; 
+    max-width: 60px; 
+}
+
+.likert-5 {
+    display: flex;
+    flex-wrap: nowrap; 
+    justify-content: space-between;
+    gap: 10px; 
+}
+
+.likert-5 label {
+    flex: 0 0 calc(20% - 10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; 
+    max-width: none; 
+    line-height: 1.2;
+}
+
+/* Radio und Checkbox */
+.radio-checkmark, .checkmark {
+    width: 22px;
+    height: 22px;
+    background-color: #d8dcdf;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.checkmark {
+    border-radius: 4px; 
+}
+
+.checkbox-container .checkmark {
+    background-color: #d8dcdf;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.checkbox-container:hover .checkmark {
+    background-color: #c5c8cb; 
+}
+
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+    background-color: #3498db; 
+}
+
+.radio-container input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-container:hover .radio-checkmark {
+    background-color: #c5c8cb;
+}
+
+.radio-container input[type="radio"]:checked ~ .radio-checkmark {
+    background-color: #3498db;
+}
+
+.radio-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.radio-container input[type="radio"]:checked ~ .radio-checkmark:after {
+    display: block;
+    top: 6px;
+    left: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+}
+
+/* Semantic differential scales */
+.sd-container {
+    max-width: 800px; 
+    margin: 0 auto; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    height: 40px;
+}
+
+.sd-desktop-label {
+    display: flex;
+    word-wrap: break-word;
+    white-space: normal; 
+    width: 205px; 
+}
+
+.sd-desktop-label-left {
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.sd-desktop-label-right {
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.sd-scale {
+    display: flex;
+    flex: 0 1 auto; 
+    align-items: center; 
+    justify-content: space-between;
+    flex-wrap: nowrap; 
+    width: 100%; 
+    max-width: 800px; 
+}
+
+.sd-point {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+}
+
+.sd-label-mobile {
+    display: none;
+}
+
+/* Checkbox Haken */
+.checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkbox-container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
+    display: block;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Navigation Buttons */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.next-btn,
+.back-btn,
+.submit-btn {
+    padding: 12px 30px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+}
+
+.next-btn:disabled,
+.submit-btn:disabled {
+    background-color: #c5c8cb;
+    cursor: not-allowed;
+}
+
+.next-btn:hover:not(:disabled),
+.back-btn:hover {
+    background-color: #2980b9;
+}
+
+.back-btn {
+    background-color: #3498db;
+}
+
+.back-btn:hover {
+    background-color: #2980b9;
+}
+
+.special-submit {
+    background-color: #2ecc71;
+}
+
+.special-submit:hover {
+    background-color: #27ae60;
+}
+
+/* Container für den Open-Chatbot-Button unterhalb des Textes und oberhalb der Navigation */
+#open-chatbot-button-container {
+    position: -webkit-sticky; 
+    position: sticky;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+    z-index: 200;
+}
+
+/* Roter runder Button zum Öffnen des Chatbots */
+.open-chatbot-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #e74c3c;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
+    transition: background-color 0.3s, transform 0.3s;
+    z-index: 1000;
+}
+
+.open-chatbot-btn:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+.open-chatbot-btn img {
+    width: 25px; 
+    height: 25px;
+    object-fit: contain; 
+    filter: invert(100%); 
+    padding-top: 2px;
+}
+
+.email-container {
+    max-width: 300px; 
+    width: 100%; 
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    box-sizing: border-box;
+}
+
+.email-container input,
+.email-container button {
+    width: 100%; 
+    box-sizing: border-box;
+    border-radius: 20px;
+    font-size: 16px; 
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 10px; 
+}
+
+/* Input-Feld für die E-Mail. */
+#emailInput {
+    margin: 10px auto;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    outline: none; 
+    box-shadow: none;
+    background: transparent;
+}
+
+#emailInput:focus {
+    border-color: #3498db;
+    transition: border-color 0.2s;
+}
+
+#emailInput::placeholder {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.4375;
+    color: #999;
+    opacity: 1;
+}
+  
+/* Button zum Absenden der E-Mail. */
+#emailSubmitBtn {
+    padding: 10px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#emailSubmitBtn:hover {
+    background-color: #2980b9;
+}
+
+/* Der Bereich mit der Info zur E-Mail und dem Eingabefeld. */
+#emailInfoSection {
+    margin-top: 40px;
+}
+
+#emailInfoSection.hidden {
+    display: none;
+}
+
+/* Der Bereich mit der Erfolgsmeldung nach dem Absenden. */
+#emailSuccessSection {
+    margin-top: 40px;
+}
+
+#emailSuccessSection.hidden {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    #survey-container {
+        max-width: 100%;
+        margin: 0;
+        padding: 10px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    #survey-container.chatbot-visible-locked {
+        max-width: 600px;
+        width: 100%; 
+        margin: 0 auto;
+        padding: 0; 
+        /*border: 1px solid #ccc;*/
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        height: calc(var(--vh, 1vh) * 100 - 6px);
+        margin-top: 6px;
+        margin-bottom: 0;
+    }    
+
+    .page {
+        padding: 20px 10px;
+    }
+
+    .divider-line {
+        display: block;
+    }
+
+    .likert, .likert-7 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .likert label, .likert .radio-container {
+        max-width: none;
+        width: 100%;
+    }
+
+    .likert label {
+        gap: 10px;
+        line-height: 1.2;
+    }
+
+    .likert label, .likert-7 label {
+        white-space: normal; 
+    }
+
+    .likert-7 label {
+        justify-content: flex-start; 
+        margin-right: 0; 
+    }
+
+    .sd-desktop-label {
+        display: none;
+    }
+
+    .sd-container {
+        height: auto;
+    }
+
+    .sd-scale {
+        width: 100%;      
+        max-width: 100%; 
+        justify-content: space-between;
+        flex-wrap: nowrap; 
+        align-items: flex-start;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .sd-label-mobile-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .sd-label-mobile {
+        display: flex;
+        margin-top: 4px;
+        width: 70px; 
+        justify-content: center;
+        align-items: center; 
+        text-align: center;
+        word-wrap: break-word; 
+        white-space: normal; 
+    }
+
+    .sd-point {
+        display: block;
+    }
+
+    .checkbox-container {
+        justify-content: flex-start;
+    }
+
+    .navigation-start-page {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 600.1px) {
+    #survey-container.chatbot-visible {
+        max-width: 600px;
+        width: 100%; 
+        margin: 0 auto;
+        padding: 0; 
+        /*border: 1px solid #ccc;*/
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        height: 750px;
+        max-height: calc(var(--vh, 1vh) * 100 - 6px);
+    
+        margin-top: clamp(
+          6px,
+          calc(( (var(--vh, 1vh) * 100 - 6px) - 750px ) / 2),
+          9999px
+        );
+        margin-bottom: clamp(
+            0px,
+            calc(( (var(--vh, 1vh) * 100 - 6px) - 750px ) / 2),
+            9999px
+        );
+    }
+}
+
+@media (max-width: 799px) {
+
+    .likert, .likert-7 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .likert label, .likert-7 label {
+        max-width: none;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        line-height: 1.2;
+        white-space: normal;
+        margin-right: 0; 
+    }
+
+    .likert-7 label {
+        justify-content: flex-start; 
+    }
+}
