@@ -17,7 +17,7 @@
  * - treatmentFallback @type {number}: the static treatment group value if randomTreatment
  * is set to false.
  */
-const randomTreatment = true;   // To be specified: whether the treatment group is assigned randomly!
+const randomTreatment = false;   // To be specified: whether the treatment group is assigned randomly!
 const treatmentFallback = 1;     // To be specified: the treatment fallback value!
 
 /**
