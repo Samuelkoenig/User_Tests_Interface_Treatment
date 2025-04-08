@@ -17,12 +17,12 @@
  * - treatmentFallback @type {number}: the static treatment group value if randomTreatment
  * is set to false.
  */
-const randomTreatment = false;   // To be specified: whether the treatment group is assigned randomly!
+const randomTreatment = true;   // To be specified: whether the treatment group is assigned randomly!
 const treatmentFallback = 1;     // To be specified: the treatment fallback value!
 
 /**
  * Load the environment variables from the .env file (DATABASE_URL and DIRECT_LINE_SECRET).
- */ 
+ */
 require('dotenv').config(); 
 
 /**
@@ -47,13 +47,15 @@ const axios = require('axios');
  */
 const app = express();
 app.use(bodyParser.json());
-app.use(express.static('public')); 
+app.use(express.static('public'));
 
 /**
- * Set up an in-memory storage for processed messages to avoid duplicates.
- * Automatically clear the stored message ids after one hour.
+ * Set up an in-memory storage for processed messages and messages in progress
+ * to avoid duplicates.
+ * Automatically clear the stored processed message ids after one hour.
  */
 const processedMessages = new Map();
+const inProgressMessages = new Map(); 
 setInterval(() => {
   const now = Date.now();
   const oneHour = 60 * 60 * 1000;
@@ -340,21 +342,30 @@ app.post('/getactivities', async (req, res) => {
  * 
  * @param {object} req - An object with the conversationId, the user message and the 
  * treatment group value. 
- * @returns {object} json object with the conversation id. 
+ * @returns {object} json object with the conversation id.
  */
 app.post('/sendmessage', async (req, res) => {
   const { conversationId, text, treatmentGroup, clientSideMsgId } = req.body;
   const messageKey = `${conversationId}::${clientSideMsgId}`;
+
   if (processedMessages.has(messageKey)) {
     const storedEntry = processedMessages.get(messageKey);
     return res.json({ status: "duplicate", id: storedEntry.id });
   }
+
+  if (inProgressMessages.has(messageKey)) {
+    return res.json({ status: "in_progress" });
+  }
+
+  inProgressMessages.set(messageKey, true);
+
   const activity = {
     type: "message",
     from: { id: "user1" },
     text,
     channelData: { treatmentGroup: treatmentGroup }
   };
+
   try {
     const response = await axios.post(`${DIRECT_LINE_BASE}/conversations/${conversationId}/activities`, activity, {
       headers: {
@@ -362,10 +373,14 @@ app.post('/sendmessage', async (req, res) => {
         'Content-Type': 'application/json'
       }
     });
+
     processedMessages.set(messageKey, { timestamp: Date.now(), id: response.data.id });
+    inProgressMessages.delete(messageKey);
     res.json(response.data);
+
   } catch (err) {
     console.error("Error when sending the message:", err);
+    inProgressMessages.delete(messageKey);
     res.status(500).json({ error: "Error when sending the message", details: err.toString() });
   }
 });
