@@ -1,7 +1,7 @@
 /**
  * @fileoverview This script contains the logic for the mobile view and is executed by the 
  * client in the browser. 
- * @author Samuel König <koenigsamuel99@gmx.de>
+ * @author Samuel König
  * @version 1.0.0
  */
 

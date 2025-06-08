@@ -1,7 +1,7 @@
 /**
  * @fileoverview This script contains the server-side logic for the survey webpage and the 
  * chatbot interface. 
- * @author Samuel König <koenigsamuel99@gmx.de>
+ * @author Samuel König
  * @version 1.0.0
  */
 
